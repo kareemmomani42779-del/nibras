@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نبراس – معلم ذكي لجميع المواد | تعلّم أونلاين مجاناً</title>
+<meta name="description" content="نبراس تطبيق تعليمي بالعربية: معلم ذكي لكل مادة (عربي، إنجليزي، رياضيات، علوم، تاريخ وجغرافيا، تربية إسلامية، برمجة). اسأل، افهم، وتدرّب.">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon-192.png"><link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta property="og:title" content="نبراس – معلمك الذكي"><meta property="og:description" content="معلم ذكي لكل مادة، بالعربية."><meta property="og:type" content="website"><meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"نبراس","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"ar","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--card:#fff;--tx:#1b1f3a;--mut:#667;--pri:#4f46e5;--bub:#eceefb;--bd:#e3e5f0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142a;--card:#1c1f3d;--tx:#eef0ff;--mut:#9aa0c8;--pri:#818cf8;--bub:#262a52;--bd:#2d3160}}
+:root[data-theme="dark"]{--bg:#12142a;--card:#1c1f3d;--tx:#eef0ff;--mut:#9aa0c8;--pri:#818cf8;--bub:#262a52;--bd:#2d3160}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;display:flex;flex-direction:column}
+header{padding:16px 18px 8px}
+h1{margin:0;font-size:26px;color:var(--pri)}
+header p{margin:4px 0 0;color:var(--mut);font-size:14px}
+#home{flex:1;overflow:auto;padding:10px 16px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start}
+.sub{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px 12px;text-align:center;cursor:pointer;font:inherit;color:inherit}
+.sub:active{transform:scale(.97)}
+.sub .e{font-size:38px}
+.sub b{display:block;margin-top:6px;font-size:16px}
+.sub small{color:var(--mut);font-size:12px}
+#chat{display:none;flex:1;flex-direction:column;min-height:0}
+.top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border-bottom:1px solid var(--bd)}
+.top button{border:0;background:var(--bub);color:var(--tx);border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer}
+.top .e{font-size:28px}
+.top div b{display:block}
+.top div small{color:var(--mut)}
+#msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word}
+.m.u{align-self:flex-start;background:var(--pri);color:#fff}
+.m.a{align-self:flex-end;background:var(--bub)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer}
+form,.bar{display:flex;gap:8px;padding:10px 12px;background:var(--card);border-top:1px solid var(--bd)}
+textarea{flex:1;resize:none;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:14px;padding:10px 12px;font:inherit;max-height:110px}
+.send{border:0;background:var(--pri);color:#fff;border-radius:14px;padding:0 18px;font:inherit;cursor:pointer}
+.send:disabled{opacity:.5}
+</style>
+</head>
+<body>
+<header id="hd"><h1>🌟 نبراس</h1><p>اختر معلمك وابدأ التعلم، كل مادة لها معلم ذكي يشرح لك ويسألك</p><button id="inst" style="display:none;margin-top:10px;border:0;background:var(--pri);color:#fff;border-radius:12px;padding:10px 16px;font:inherit;cursor:pointer">📲 ثبّت التطبيق على جهازك</button></header>
+<div id="home"></div>
+<div id="chat">
+  <div class="top"><button id="back">→ رجوع</button><span class="e" id="te"></span><div><b id="tn"></b><small id="ts"></small></div></div>
+  <div id="msgs"></div>
+  <div class="bar"><textarea id="inp" rows="1" placeholder="اكتب سؤالك هنا…"></textarea><button class="send" id="go">إرسال</button></div>
+</div>
+<script>
+var T=[
+{id:"ar",e:"📖",s:"اللغة العربية",n:"الأستاذة سلمى",c:["اشرح لي الفاعل والمفعول به","اختبرني في الإملاء","كيف أكتب موضوع تعبير؟"],p:"معلمة لغة عربية: نحو وصرف وإملاء وأدب وتعبير"},
+{id:"en",e:"🔤",s:"اللغة الإنجليزية",n:"Mr. Adam",c:["علمني المضارع البسيط","Quiz me on 10 words","صحح لي هذه الجملة"],p:"معلم لغة إنجليزية: قواعد ومفردات ومحادثة. اشرح بالعربية وأعط الأمثلة بالإنجليزية مع ترجمتها"},
+{id:"ma",e:"➗",s:"الرياضيات",n:"الأستاذ رامي",c:["اشرح لي الكسور","حل معي معادلة من الدرجة الثانية","أعطني تمرين وأنا أحله"],p:"معلم رياضيات: حل خطوة بخطوة وبدون القفز للنتيجة"},
+{id:"sc",e:"🔬",s:"العلوم (فيزياء، كيمياء، أحياء)",n:"الدكتورة ليلى",c:["كيف تعمل عملية البناء الضوئي؟","اشرح قوانين نيوتن","ما هو الجدول الدوري؟"],p:"معلمة علوم: فيزياء وكيمياء وأحياء بأمثلة من الحياة اليومية"},
+{id:"so",e:"🌍",s:"التاريخ والجغرافيا",n:"الأستاذ خالد",c:["لخص لي تاريخ الأردن","كيف تتكون الجبال؟","اسألني أسئلة عن العواصم"],p:"معلم تاريخ وجغرافيا ودراسات اجتماعية"},
+{id:"is",e:"🕌",s:"التربية الإسلامية",n:"الشيخ أحمد",c:["اشرح لي أركان الإسلام","علمني تجويد سورة قصيرة","قصة من السيرة النبوية"],p:"معلم تربية إسلامية: عقيدة وفقه وسيرة وتجويد، بأسلوب مبسط ومحترم"},
+{id:"co",e:"💻",s:"الحاسوب والبرمجة",n:"الأستاذ يزن",c:["ما هي المتغيرات؟","علمني بايثون من الصفر","اشرح لي كيف يعمل الإنترنت"],p:"معلم حاسوب وبرمجة: شرح مبسط مع أمثلة كود صغيرة"}
+];
+var cur=null,hist=[],busy=false;
+var $=function(i){return document.getElementById(i)};
+var home=$("home");
+T.forEach(function(t){var b=document.createElement("button");b.className="sub";b.innerHTML='<span class="e">'+t.e+'</span><b>'+t.s+'</b><small>'+t.n+'</small>';b.onclick=function(){open_(t)};home.appendChild(b)});
+function add(cls,txt){var d=document.createElement("div");d.className="m "+cls;d.textContent=txt;$("msgs").appendChild(d);$("msgs").scrollTop=1e9;return d}
+function open_(t){cur=t;hist=[];$("msgs").innerHTML="";$("te").textContent=t.e;$("tn").textContent=t.n;$("ts").textContent=t.s;
+home.style.display="none";$("hd").style.display="none";$("chat").style.display="flex";
+add("a","أهلاً بك! أنا "+t.n+"، معلمك في "+t.s+". اسألني عن أي شيء، أو اختر من الاقتراحات:");
+var c=document.createElement("div");c.className="chips";t.c.forEach(function(q){var b=document.createElement("button");b.textContent=q;b.onclick=function(){c.remove();send(q)};c.appendChild(b)});$("msgs").appendChild(c)}
+$("back").onclick=function(){$("chat").style.display="none";home.style.display="grid";$("hd").style.display="block"};
+async function send(q){
+if(busy||!q.trim())return;busy=true;$("go").disabled=true;
+add("u",q);hist.push({role:"user",content:q});$("inp").value="";
+var d=add("a","…");
+try{
+var sys="أنت "+cur.n+"، "+cur.p+". تتحدث مع طالب بالعربية الواضحة والمبسطة وبأسلوب ودود. اشرح خطوة بخطوة، اعط أمثلة، واسأل الطالب سؤالاً قصيراً في نهاية الشرح للتأكد من فهمه. إن أخطأ الطالب فصحح له بلطف. لا تخرج عن مادتك إلا بإيجاز.";
+var r=await fetch("/api/chat",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({system:sys,messages:hist})});
+if(!r.ok)throw 0;var j=await r.json();
+d.textContent=j.text;hist.push({role:"assistant",content:j.text});
+}catch(e){d.textContent="حدث خطأ، حاول مرة ثانية.";hist.pop()}
+busy=false;$("go").disabled=false}
+$("go").onclick=function(){send($("inp").value)};
+$("inp").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send($("inp").value)}});
+var dp=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;$("inst").style.display="inline-block"});
+$("inst").onclick=function(){if(dp){dp.prompt();dp=null;$("inst").style.display="none"}};
+if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js");
+</script>
+</body>
+</html>
